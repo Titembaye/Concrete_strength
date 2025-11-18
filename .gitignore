@@ -44,7 +44,7 @@ wheels/
 Thumbs.db
 desktop.ini
 
-# Data (optionnel - décommenter si vous ne voulez pas versionner les données)
+# Data (optionnel - dï¿½commenter si vous ne voulez pas versionner les donnï¿½es)
 # data/raw/*
 # data/processed/*
 
@@ -73,3 +73,8 @@ htmlcov/
 # Temporary files
 *.tmp
 *.bak
+/models/
+
+
+/data/raw/
+/data/processed/
