@@ -38,19 +38,21 @@ scaler = None
 
 @app.on_event("startup")
 def load_model():
-    """Charge le modèle et le scaler au démarrage de l'API"""
+    """Charge le modèle au démarrage"""
     global model, scaler
-
-    # Trouver la dernière version du modèle
-    model_dir = "models/v20251118_094354"  # Exemple de version, à adapter selon le contexte
-    model_path = os.path.join(model_dir, "model.pkl")
-    scaler_path = os.path.join(model_dir, "scaler.pkl")
-
-    # charger le modèle et le scaler
-    print("Chargement du modèle et du scaler...")
-    model = joblib.load(model_path)
-    scaler = joblib.load(scaler_path)
-    print("Modèle et scaler chargés avec succès.")
+    
+    # Pour Docker, le modèle doit être monté comme volume
+    # ou téléchargé depuis un storage
+    model_dir = "models/v20251118_094354"
+    
+    if not os.path.exists(model_dir):
+        print(" Modèle non trouvé, API en mode dégradé")
+        return
+    
+    print(f"Chargement du modèle depuis {model_dir}...")
+    model = joblib.load(f"{model_dir}/model.pkl")
+    scaler = joblib.load(f"{model_dir}/scaler.pkl")
+    print(" Modèle chargé")
 
 @app.get("/")
 def home():
