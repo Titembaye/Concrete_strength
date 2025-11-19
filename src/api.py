@@ -43,7 +43,7 @@ def load_model():
     
     # Pour Docker, le modèle doit être monté comme volume
     # ou téléchargé depuis un storage
-    model_dir = "models/v20251118_094354"
+    model_dir = "models_deploy/v20251118_094354"
     
     if not os.path.exists(model_dir):
         print(" Modèle non trouvé, API en mode dégradé")
