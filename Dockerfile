@@ -13,6 +13,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copier le code source
 COPY src/ ./src/
 
+# Copier le modèle pour le déploiement
+COPY models_deploy/ ./models_deploy/
+
 # Exposer le port
 EXPOSE 8000
 
