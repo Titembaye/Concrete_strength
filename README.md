@@ -1,26 +1,24 @@
 # Concrete Strength Prediction - MLOps Project
 
-Projet de prédiction de la résistance à la compression du béton utilisant des techniques de Machine Learning et des pratiques MLOps complètes.
+Projet de prédiction de la résistance à la compression du béton utilisant des techniques de Machine Learning et des pratiques MLOps.
 
-🌐 **API en production** : https://concrete-strength-cbj0.onrender.com
-
-📊 **Documentation interactive** : https://concrete-strength-cbj0.onrender.com/docs
+**API en production** : https://concrete-strength-cbj0.onrender.com
 
 ---
 
-## 🎯 Objectif
+## Objectif
 
-Créer un système de machine learning **en production** qui prédit la **résistance à la compression du béton** (en MPa) à partir de sa composition et de son âge.
+Créer un système de machine learning qui prédit la **résistance à la compression du béton** (en MPa) à partir de sa composition et de son âge.
 
-### Cas d'usage
-- **Gain de temps** : Prédiction immédiate vs 28 jours d'attente pour les tests physiques
-- **Économies** : Réduction des tests destructifs coûteux
-- **Optimisation** : Trouver la meilleure formule de béton pour une résistance cible
-- **Durabilité** : Optimiser l'usage du ciment (réduction empreinte carbone)
+### Avantages
+- Prédiction immédiate vs 28 jours d'attente pour les tests physiques
+- Réduction des tests destructifs coûteux
+- Optimisation des formules de béton
+- Réduction de l'empreinte carbone
 
 ---
 
-## 🏆 Résultats
+## Résultats
 
 | Modèle | R² | RMSE | MAE |
 |--------|-----|------|-----|
@@ -31,7 +29,7 @@ Le modèle Random Forest explique **88.4%** de la variance avec une erreur moyen
 
 ---
 
-## 📊 Dataset
+## Dataset
 
 **Source** : UCI Machine Learning Repository - Concrete Compressive Strength Dataset
 
@@ -39,123 +37,38 @@ Le modèle Random Forest explique **88.4%** de la variance avec une erreur moyen
 - **8 features** : Cement, Blast Furnace Slag, Fly Ash, Water, Superplasticizer, Coarse Aggregate, Fine Aggregate, Age
 - **1 target** : Strength (résistance en MPa)
 
-### Features principales
-- **Cement** (corrélation: 0.50) - Plus important prédicteur
-- **Superplasticizer** (corrélation: 0.37)
-- **Age** (corrélation: 0.33)
-
 ---
 
-## 🗂️ Structure du projet
-
-```
-concrete_strength_mlops/
-├── data/
-│   ├── raw/                      # Données brutes (DVC tracked)
-│   └── processed/                # Données nettoyées (DVC tracked)
-├── notebooks/
-│   ├── 01_exploration.ipynb     # Analyse exploratoire (EDA)
-│   ├── 02_modeling.ipynb        # Entraînement des modèles
-│   └── 03_monitoring.ipynb      # Monitoring avec Evidently AI
-├── src/
-│   ├── api.py                   # API FastAPI
-│   ├── predict.py               # Script de prédiction
-│   ├── train.py                 # Pipeline d'entraînement avec MLflow
-│   └── utils.py                 # Fonctions utilitaires
-├── models/                       # Modèles versionnés (DVC tracked)
-├── models_deploy/                # Modèle pour déploiement
-├── .github/workflows/
-│   └── ci-cd.yml                # Pipeline CI/CD
-├── Dockerfile                    # Containerisation
-├── requirements.txt
-└── README.md
-```
-
----
-
-## 🚀 Utilisation de l'API en production
-
-### Faire une prédiction via l'API
-
-**Endpoint** : `POST https://concrete-strength-cbj0.onrender.com/predict`
-
-**Exemple avec curl** :
-```bash
-curl -X POST "https://concrete-strength-cbj0.onrender.com/predict" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "cement": 540.0,
-    "blast_furnace_slag": 0.0,
-    "fly_ash": 0.0,
-    "water": 162.0,
-    "superplasticizer": 2.5,
-    "coarse_aggregate": 1040.0,
-    "fine_aggregate": 676.0,
-    "age": 28
-  }'
-```
-
-**Exemple avec Python** :
-```python
-import requests
-
-url = "https://concrete-strength-cbj0.onrender.com/predict"
-data = {
-    "cement": 540.0,
-    "blast_furnace_slag": 0.0,
-    "fly_ash": 0.0,
-    "water": 162.0,
-    "superplasticizer": 2.5,
-    "coarse_aggregate": 1040.0,
-    "fine_aggregate": 676.0,
-    "age": 28
-}
-
-response = requests.post(url, json=data)
-print(response.json())
-# Output: {"predicted_strength_mpa": 73.14, "input": {...}}
-```
-
-**Interface interactive** : https://concrete-strength-cbj0.onrender.com/docs
-
----
-
-## 💻 Installation locale
+## Installation
 
 ### Prérequis
 - Python 3.11+
-- Docker (optionnel)
+- Docker
 - Git
 
 ### Étapes
 
-1. **Cloner le repository**
 ```bash
+# 1. Cloner le repository
 git clone https://github.com/Titembaye/Concrete_strength.git
 cd Concrete_strength
-```
 
-2. **Créer un environnement virtuel**
-```bash
+# 2. Créer un environnement virtuel
 python -m venv .venv
 source .venv/bin/activate  # Linux/Mac
 # ou
 .venv\Scripts\activate     # Windows
-```
 
-3. **Installer les dépendances**
-```bash
+# 3. Installer les dépendances
 pip install -r requirements.txt
-```
 
-4. **Récupérer les données et modèles (DVC)**
-```bash
+# 4. Récupérer les données et modèles (DVC)
 dvc pull
 ```
 
 ---
 
-## 🔧 Développement local
+## Utilisation
 
 ### Lancer l'API localement
 
@@ -171,142 +84,32 @@ Accès : http://localhost:8000
 python src/train.py
 ```
 
-Les résultats sont trackés dans MLflow :
-```bash
-mlflow ui
-```
-
-### Faire une prédiction (script)
-
-```bash
-python src/predict.py
-```
-
 ---
 
-## 🐳 Docker
+## Stack MLOps
 
-### Build l'image
-
-```bash
-docker build -t concrete-strength-api .
-```
-
-### Lancer le container
-
-```bash
-docker run -p 8000:8000 concrete-strength-api
-```
-
----
-
-## 🔄 CI/CD Pipeline
-
-Workflow automatisé avec **GitHub Actions** :
-
-1. **Tests** : Vérification des imports et health check
-2. **Build** : Construction de l'image Docker
-3. **Push** : Publication sur Docker Hub
-4. **Deploy** : Déploiement automatique sur Render
-
-Déclenché à chaque `push` sur la branche `main`.
-
----
-
-## 📈 Stack MLOps
-
-### Développement
 - **ML** : scikit-learn, pandas, numpy
-- **Visualisation** : matplotlib, seaborn, plotly
-
-### MLOps
 - **Experiment Tracking** : MLflow
 - **Data Versioning** : DVC
-- **Monitoring** : Evidently AI
+- **Monitoring** : Evidently AI, Prometheus, Grafana
 - **API** : FastAPI
 - **Containerisation** : Docker
 - **CI/CD** : GitHub Actions
 - **Déploiement** : Render
-- **Registry** : Docker Hub
 
 ---
 
-## 📊 Monitoring
+## CI/CD Pipeline
 
-### Data Drift Detection
-- **Outil** : Evidently AI
-- **Rapport** : Généré dans `reports/data_drift_report.html`
-- **Fréquence** : À la demande via notebook
-
-### Métriques du modèle
-- Trackées avec MLflow
-- Versioning automatique des expériences
+Workflow automatisé avec **GitHub Actions** :
+1. Tests automatiques
+2. Build de l'image Docker
+3. Push sur Docker Hub
+4. Déploiement automatique sur Render
 
 ---
 
-## 🧪 Tests
-
-```bash
-# Tests automatiques via CI/CD
-pytest tests/
-```
-
----
-
-## 📝 Méthodologie
-
-### 1. Analyse Exploratoire (EDA)
-- Distribution de la target : légèrement asymétrique positive (acceptable)
-- Pas de valeurs manquantes
-- Quelques outliers hauts (bétons haute performance) conservés
-- Corrélations identifiées
-
-### 2. Preprocessing
-- Conversion des types de données
-- Normalisation avec StandardScaler
-- Train/test split : 80/20
-
-### 3. Modélisation
-- **Baseline** : Régression Linéaire (R² = 0.628)
-- **Final** : Random Forest (R² = 0.884)
-- Overfitting détecté mais acceptable (train R²=0.986 vs test R²=0.884)
-
-### 4. Déploiement
-- API FastAPI containerisée
-- Auto-deploy via CI/CD
-- Monitoring data drift
-
----
-
-## 🔮 Améliorations futures
-
-### ML
-- [ ] Réduire l'overfitting (hyperparameter tuning)
-- [ ] Feature engineering (ratio eau/ciment, total_binder)
-- [ ] Tester XGBoost, LightGBM
-- [ ] Cross-validation
-
-### MLOps
-- [x] Tracking avec MLflow
-- [x] Versioning données (DVC)
-- [x] API REST avec FastAPI
-- [x] CI/CD avec GitHub Actions
-- [x] Containerisation avec Docker
-- [x] Déploiement production
-- [x] Monitoring data drift (Evidently)
-- [ ] Tests unitaires complets (pytest)
-- [ ] Prometheus + Grafana (infrastructure monitoring)
-- [ ] A/B testing de modèles
-
----
-
-## 🤝 Contribution
-
-Ce projet est à usage éducatif. Les contributions sont bienvenues !
-
----
-
-## 📚 Ressources
+## Ressources
 
 - [Dataset UCI](https://archive.ics.uci.edu/dataset/165/concrete+compressive+strength)
 - [FastAPI Documentation](https://fastapi.tiangolo.com/)
@@ -315,15 +118,8 @@ Ce projet est à usage éducatif. Les contributions sont bienvenues !
 
 ---
 
-## 📄 License
+## Auteur
 
-Ce projet est à usage éducatif.
+**Donald TITEMBAYE** - Projet d'apprentissage MLOps
 
----
-
-## 👤 Auteur
-
-**Donal** - Projet d'apprentissage MLOps progressif
-
-🔗 [GitHub](https://github.com/Titembaye/Concrete_strength)
-🌐 [API Live](https://concrete-strength-cbj0.onrender.com)
+[GitHub](https://github.com/Titembaye/Concrete_strength) | [API Live](https://concrete-strength-cbj0.onrender.com)

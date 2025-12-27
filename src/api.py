@@ -3,6 +3,7 @@ import joblib
 import os
 from pydantic import BaseModel
 import pandas as pd
+from prometheus_fastapi_instrumentator import Instrumentator
 
 class ConcreteInput(BaseModel):
     """Schéma des données d'entrée"""
@@ -31,6 +32,10 @@ class ConcreteInput(BaseModel):
 
 # Créer l'application FastAPI
 app = FastAPI(title="Concrete Strength API")
+
+
+# Instrumenter avec Prometheus
+Instrumentator().instrument(app).expose(app)
 
 # Variables globales pour le modèle et le scaler
 model = None
